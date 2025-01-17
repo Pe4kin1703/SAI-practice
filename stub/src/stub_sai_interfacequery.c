@@ -68,6 +68,7 @@ sai_status_t sai_api_initialize(_In_ uint64_t flags, _In_ const service_method_t
  */
 sai_status_t sai_api_query(_In_ sai_api_t sai_api_id, _Out_ void** api_method_table)
 {
+    printf("sai_api_query run\n");
     if (NULL == api_method_table) {
         fprintf(stderr, "NULL method table passed to SAI API initialize\n");
 
@@ -145,8 +146,9 @@ sai_status_t sai_api_query(_In_ sai_api_t sai_api_id, _Out_ void** api_method_ta
         return SAI_STATUS_NOT_IMPLEMENTED;
 
     case SAI_API_LAG:
-        /* TODO : implement */
-        return SAI_STATUS_NOT_IMPLEMENTED;
+        printf("%s: Handler for LAG API\n", __FUNCTION__);
+         *(const sai_lag_api_t**)api_method_table = &lag_api;
+        return SAI_STATUS_SUCCESS;
 
     default:
         fprintf(stderr, "Invalid API type %d\n", sai_api_id);
